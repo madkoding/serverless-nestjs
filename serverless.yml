@@ -1,0 +1,23 @@
+service: serverless-nestjs
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: us-east-2
+  apiGateway:
+    shouldStartNameWithService: true
+
+functions:
+  app:
+    handler: dist/lambda.handler
+    events:
+      - http: ANY /
+      - http: "ANY /{proxy+}"
+
+plugins:
+  - serverless-offline
+
+custom:
+  serverless-offline:
+    httpPort: 3000
